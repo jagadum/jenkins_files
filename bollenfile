@@ -1,0 +1,130 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'BRANCH_NAME_PARAM', choices: ['phase1_05' , 'UAT-Branch', 'TEST-Branch'], description: 'Branch name for cloning repository')
+        booleanParam(name: 'AM_Frontend_UAT_Service', defaultValue: false, description: 'Enable AM Frontend UAT Service')
+        booleanParam(name: 'AM_Proxy_UAT_Service', defaultValue: false, description: 'Enable AM Proxy UAT Service')
+        booleanParam(name: 'AM_KAFKA_UAT_Service', defaultValue: false, description: 'Enable AM Kafka UAT Service')
+        booleanParam(name: 'AM_Ticket_UAT_Service', defaultValue: false, description: 'Enable AM Ticket UAT Service')
+        booleanParam(name: 'AM_Gateway_UAT_Service', defaultValue: false, description: 'Enable AM Gateway UAT Service')
+        booleanParam(name: 'AM_Fileserver_UAT_Service', defaultValue: false, description: 'Enable AM Fileserver UAT Service')
+        booleanParam(name: 'AM_Workflow_UAT_Service', defaultValue: false, description: 'Enable AM Workflow UAT Service')
+    }
+
+    stages {
+        stage('Clone Repository') {
+            when {
+                expression {
+                    params.AM_Frontend_UAT_Service
+                }
+            }
+            steps {
+                dir('app_modernization') {
+                    git branch: "${params.BRANCH_NAME_PARAM}",
+                        credentialsId: 'Devops', // Replace with your credentials ID
+                        url: 'https://svn.cloud4c.com/myshift2.0/ui-myshift2.0.git'
+                }
+            }
+        }
+
+        stage('AM_Frontend_UAT_Service') {
+            when {
+                expression {
+                    params.AM_Frontend_UAT_Service
+                }
+            }
+            steps {
+                echo 'Building AM Frontend UAT Service...'
+                // Add your build steps here
+                echo 'Deploying AM Frontend UAT Service...'
+                // Add your deployment steps here
+            }
+        }
+
+        stage('AM_Proxy_UAT_Service') {
+            when {
+                expression {
+                    params.AM_Proxy_UAT_Service
+                }
+            }
+            steps {
+                echo 'Building AM Proxy UAT Service...'
+                // Add your build steps here
+                echo 'Deploying AM Proxy UAT Service...'
+                // Add your deployment steps here
+            }
+        }
+
+        stage('AM_KAFKA_UAT_Service') {
+            when {
+                expression {
+                    params.AM_KAFKA_UAT_Service
+                }
+            }
+            steps {
+                echo 'Building AM Kafka UAT Service...'
+                // Add your build steps here
+                echo 'Deploying AM Kafka UAT Service...'
+                // Add your deployment steps here
+            }
+        }
+
+        stage('AM_Ticket_UAT_Service') {
+            when {
+                expression {
+                    params.AM_Ticket_UAT_Service
+                }
+            }
+            steps {
+                echo 'Building AM Ticket UAT Service...'
+                // Add your build steps here
+                echo 'Deploying AM Ticket UAT Service...'
+                // Add your deployment steps here
+            }
+        }
+
+        stage('AM_Gateway_UAT_Service') {
+            when {
+                expression {
+                    params.AM_Gateway_UAT_Service
+                }
+            }
+            steps {
+                echo 'Building AM Gateway UAT Service...'
+                // Add your build steps here
+                echo 'Deploying AM Gateway UAT Service...'
+                // Add your deployment steps here
+            }
+        }
+
+        stage('AM_Fileserver_UAT_Service') {
+            when {
+                expression {
+                    params.AM_Fileserver_UAT_Service
+                }
+            }
+            steps {
+                echo 'Building AM Fileserver UAT Service...'
+                // Add your build steps here
+                echo 'Deploying AM Fileserver UAT Service...'
+                // Add your deployment steps here
+            }
+        }
+
+        stage('AM_Workflow_UAT_Service') {
+            when {
+                expression {
+                    params.AM_Workflow_UAT_Service
+                }
+            }
+            steps {
+                echo 'Building AM Workflow UAT Service...'
+                // Add your build steps here
+                echo 'Deploying AM Workflow UAT Service...'
+                // Add your deployment steps here
+            }
+        }
+    }
+}
+
